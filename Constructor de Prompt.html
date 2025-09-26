@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Constructor de Prompts</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+    }
+    .formulario {
+      background-color: #227fcd;
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 700px;
+      margin: 20px auto;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+    }
+    select, input[type="color"], textarea, button {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: none;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    textarea {
+      resize: vertical;
+    }
+    button {
+      background-color: #fff;
+      color: #227fcd;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #e6e6e6;
+    }
+    .acciones {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .acciones button {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="formulario">
+    <h2>Constructor de Prompts</h2>
+
+    <!-- Tipo de imagen -->
+    <label for="tipoImagen">Tipo de imagen / estilo:</label>
+    <select id="tipoImagen">
+      <option></option>
+      <option>Realista / fotorrealista – Fotos, retratos, paisajes</option>
+      <option>Ilustrativo – Libros, cómics, materiales educativos</option>
+      <option>Minimalista / flat design – Iconos, apps, gráficos sencillos</option>
+      <option>Vectorial – Logotipos, infografías escalables</option>
+      <option>Arte conceptual / fantasía – Escenarios imaginarios, personajes fantásticos</option>
+      <option>Surrealista – Combinaciones imposibles, arte abstracto</option>
+      <option>Raster / bitmap – Fotografías, pinturas digitales detalladas</option>
+      <option>3D / renderizado – Modelos, videojuegos, visualización de productos</option>
+      <option>Collage digital – Composición de imágenes y texturas</option>
+      <option>Pixel art – Videojuegos retro, animaciones pixeladas</option>
+      <option>Educativas / infografías – Diagramas, esquemas explicativos</option>
+      <option>Marketing / publicidad – Banners, flyers, anuncios digitales</option>
+      <option>Animadas / GIFs / cinemagraphs – Imágenes en movimiento, microanimaciones</option>
+      <option>Interactiva – Mapas, botones, elementos que cambian con interacción</option>
+      <option>Fotomanipulación / composición – Mezcla de fotos y efectos digitales</option>
+      <option>Acuarela digital – Pintura suave, ilustraciones artísticas</option>
+      <option>Óleo digital – Pintura digital con textura de óleo</option>
+      <option>Dibujo a lápiz / boceto – Apariencia de dibujo hecho a mano</option>
+      <option>Cartoon / caricatura – Caricaturas, animaciones estilo animé o cartoon</option>
+      <option>Low poly / geométrico – Formas geométricas, estilo abstracto o 3D simplificado</option>
+    </select>
+
+    <!-- Detalles del usuario -->
+    <label for="detalles">Detalles adicionales de la imagen:</label>
+    <textarea id="detalles" rows="3" placeholder="Ej.: estilo oscuro y dramático, iluminación cálida, personaje con sombrero..."></textarea>
+
+    <!-- Selección de colores -->
+    <label>Selecciona hasta 3 colores:</label>
+    <input type="color" id="color1" value="#ff0000">
+    <input type="color" id="color2" value="#00ff00">
+    <input type="color" id="color3" value="#0000ff">
+
+    <!-- Resultado final -->
+    <label for="resultado">📌 Prompt final listo para usar:</label>
+    <textarea id="resultado" rows="6" placeholder=""></textarea>
+
+    <!-- Botones -->
+    <div class="acciones">
+      <button onclick="generarPrompt()">⚡ Generar Prompt</button>
+      <button onclick="copiarPrompt()">📋 Copiar Prompt</button>
+      <button onclick="limpiarFormulario()">🗑️ Limpiar todo</button>
+    </div>
+  </div>
+
+  <script>
+    function generarPrompt() {
+      const tipoImagen = document.getElementById("tipoImagen").value;
+      const detalles = document.getElementById("detalles").value.trim();
+      const colores = [
+        document.getElementById("color1").value,
+        document.getElementById("color2").value,
+        document.getElementById("color3").value
+      ].filter(c => c !== "");
+
+      let prompt = "";
+      if(tipoImagen) prompt += `Crear un ${tipoImagen}`;
+      if(detalles) prompt += `, con los siguientes detalles: ${detalles}`;
+      if(colores.length > 0) prompt += `, usando los colores: ${colores.join(', ')}`;
+      prompt += ".";
+
+      document.getElementById("resultado").value = prompt;
+    }
+
+    function copiarPrompt() {
+      var prompt = document.getElementById("resultado");
+      prompt.select();
+      document.execCommand("copy");
+      alert("✅ Prompt copiado al portapapeles");
+    }
+
+    function limpiarFormulario() {
+      document.getElementById("tipoImagen").selectedIndex = 0;
+      document.getElementById("detalles").value = "";
+      document.getElementById("color1").value = "#ff0000";
+      document.getElementById("color2").value = "#00ff00";
+      document.getElementById("color3").value = "#0000ff";
+      document.getElementById("resultado").value = "";
+    }
+  </script>
+</body>
+</html>
